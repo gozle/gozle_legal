@@ -13,7 +13,7 @@ def invalidate_single_category_cache(sender, instance, **kwargs):
 
 @receiver([post_save, post_delete], sender=Document)
 def invalidate_document_cache(sender, instance, **kwargs):
-    cache.delete('cached_document')
+    cache.delete(f'cached_document{instance.id}')
 
 @receiver([post_save, post_delete], sender=Document)
 def invalidate_documents_cache(sender, instance, **kwargs):
