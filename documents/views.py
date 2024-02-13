@@ -31,14 +31,13 @@ def add_document(request):
 
 def view_document(request, id):
     cached_categories = cache.get("cached_categories")
-    cached_document = cache.get("cached_document")
+    cached_document = cache.get(f"cached_document{id}")
 
     if cached_categories is None or cached_document is None:
-
         categories = Category.objects.all()
         document = Document.objects.get(id = id)
 
-        cache.set('cached_document', document, CACHE_TTL)
+        cache.set(f'cached_document{id}', document, CACHE_TTL)
         cache.set('cached_categories', categories, CACHE_TTL)
     else:
         categories = cached_categories
