@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'simple_history',
     'ckeditor',
     'django_prometheus',
+    'search',
+    'django_elasticsearch_dsl',
 ]
 
 MIDDLEWARE = [
@@ -159,3 +161,10 @@ CACHES = {
 }
 
 CACHE_TTL = 60 * 30
+
+#ELASTIC SEARCH
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200'
+    },
+}

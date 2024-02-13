@@ -1,0 +1,37 @@
+<!-- search_results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Search Results</h1>
+        <p class="mb-4">Showing results for: <strong>{{ query }}</strong></p>
+        
+        <!-- Display search results -->
+        <div class="list-group">
+            {% for data in data_list %}
+                <a href="{% url 'documents:viewDocument' data.id %}" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ data.header }}</h5>
+                    <!-- Add more fields as needed -->
+                    <!-- Example: <p class="mb-1">{{ data.author }}</p> -->
+                </a>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Button to go back -->
+        <a href="{% url 'core:index' %}" class="btn btn-primary mt-4">Go Back</a>
+    </div>
+    <!-- Bootstrap JS (optional, if needed) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

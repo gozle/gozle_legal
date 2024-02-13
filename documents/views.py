@@ -6,6 +6,8 @@ from django.conf import settings
 from .models import Category, Document
 from .forms import PostForm
 from .utils import get_language_choices
+from django_elasticsearch_dsl import search
+from elasticsearch import Elasticsearch
 
 CACHE_TTL = getattr(settings, "CACHE_TTL")
 
@@ -32,6 +34,7 @@ def add_document(request):
 def view_document(request, id):
     cached_categories = cache.get("cached_categories")
     cached_document = cache.get(f"cached_document{id}")
+   
 
     if cached_categories is None or cached_document is None:
         categories = Category.objects.all()
