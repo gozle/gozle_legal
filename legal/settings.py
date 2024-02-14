@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django_prometheus',
     'search',
     'django_elasticsearch_dsl',
+    'rest_framework',
+    'documents_api',
 ]
 
 MIDDLEWARE = [
