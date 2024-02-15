@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +12,12 @@
     <div class="container mt-5">
         <h1>Edit Document</h1>
         <hr>
-        <form method="POST" action="{% url "documents:edit" document.id%}">
+        <form method="POST" >
             {% csrf_token %}
+            <div class="form-group">
+                <label for="documentId">Header:</label>
+                <input type="text" class="form-control" id="documentId" value = "{{document.id}}" name="documentId" placeholder="" readonly required>
+            </div>
             <div class="form-group">
                 <label for="title">Header:</label>
                 <input type="text" class="form-control" id="header" value = "{{document.header}}" name="header" placeholder="Enter document header" readonly required>
@@ -41,6 +46,8 @@
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.0/classic/ckeditor.js" defer></script>
+
+    <script src = "{% static "core/js/edit-document.js" %}"></script>
 </body>
 </html>

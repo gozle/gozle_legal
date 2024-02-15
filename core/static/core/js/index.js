@@ -20,8 +20,8 @@ let deleteButton = document.querySelector("#delete-document")
 let documentId = document.querySelector("#doc-id").innerHTML
 
 deleteButton.addEventListener("click", (e)=>{
-    fetch(`/documents/delete/${documentId}`, {
-        method: 'POST',
+    fetch(`/api/${documentId}`, {
+        method: 'DELETE',
         headers: {'X-CSRFToken': csrftoken},
         body: JSON.stringify({
             id : documentId

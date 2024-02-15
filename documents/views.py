@@ -19,16 +19,7 @@ def add_document_view(request):
         return render(request, "documents/add-document.html", context)
     return JsonResponse({"status":"500 Auth Error"})
 
-def add_document(request):
-    form = PostForm(request.POST)
-    if request.method == "POST" and form.is_valid() and request.user.is_authenticated:
-        body = form.cleaned_data['body']
-        header = request.POST["header"]
-        category_id = request.POST["category"]
-        category = Category.objects.get(id = category_id)
-        f = Document(header = header,body = body, category = category)
-        f.save()
-        return HttpResponseRedirect(reverse("core:category", kwargs={"id":category_id}))
+
         
 
 def view_document(request, id):
@@ -57,24 +48,6 @@ def edit_document_view(request, id):
         context = {"document":document, "form":form, "allCategories":Category.objects.all()}
         return render(request, "documents/edit-document.html", context)
 
-def edit_document(request,id):
-    document = Document.objects.get(id = id)
-    form = PostForm(request.POST)
-    if request.method == "POST" and form.is_valid() and request.user.is_authenticated:
-        body = form.cleaned_data['body']
-        category_id = request.POST["category"]
-        category = Category.objects.get(id = category_id)
-        document.body = body
-        document.category = category
-        document.save()
-        return HttpResponseRedirect(reverse("documents:viewDocument", kwargs= {"id":id}))
-    return JsonResponse({"status":"500 Auth Error"})
 
-def delete_documet(request,id):
-    if request.method =="POST" and request.user.is_authenticated:
-        document = Document.objects.get(id = id)
-        document.delete()
-        return JsonResponse({"status": "Successfully deleted!"})
-    return JsonResponse({"status":"500 Auth Error"})
 
 

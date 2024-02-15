@@ -26,8 +26,8 @@ urlpatterns = [
     path('authentication/', include("accounts.urls")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include("django_prometheus.urls")),
-    path('search', include('search.urls')),
-    path('api', include('documents_api.urls'))
+    path('search/', include('search.urls')),
+    path('api/', include('documents_api.urls'))
     #go to /metrics/ url for logs
     
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

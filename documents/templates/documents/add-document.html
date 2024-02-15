@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +12,8 @@
     <div class="container mt-5">
         <h1>Add Document</h1>
         <hr>
-        <form method="POST" action="{% url "documents:add" %}">
-            {% csrf_token %}
+        <form method = "POST">
+           
             <div class="form-group">
                 <label for="title">Header:</label>
                 <input type="text" class="form-control" id="header" name="header" placeholder="Enter document header" required>
@@ -36,7 +37,8 @@
         </form>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.0/classic/ckeditor.js" defer></script>
+    
+    <script src = "{% static "core/js/add-document.js" %}"></script>
 </body>
 </html>
