@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
     'rest_framework',
     'documents_api',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
