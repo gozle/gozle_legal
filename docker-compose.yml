@@ -31,6 +31,7 @@ services:
     depends_on:
       - db
       - redis
+      - elasticsearch
   db:
     restart: always
     image: postgres
@@ -49,7 +50,12 @@ services:
     ports:
       - "6379:6379"
     command: ["redis-server", "--bind", "redis", "--port", "6379"]
-    
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.1
+    ports:
+      - "9200:9200"
+      
     
 
 

@@ -170,6 +170,6 @@ CACHE_TTL = 60 * 30
 #ELASTIC SEARCH
 ELASTICSEARCH_DSL = {
     'default': {
-        'hosts': 'http://localhost:9200'
+        'hosts': 'http://elasticsearch:9200'
     },
 }
