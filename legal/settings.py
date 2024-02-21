@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-6=f&8kykdvu+$_5u$q83fbq5-c=)*&!o%)$w#=75l9n=7+rley
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost:9090", "host.docker.internal", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost:9090", "host.docker.internal", "127.0.0.1", '*']
 
 
 # Application definition
@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'Legal', 
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1', 
+        'HOST': 'db', 
         'PORT': '5432',
     }
 }
@@ -153,15 +153,17 @@ AUTH_USER_MODEL = "accounts.User"
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 #CACHING
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # This assumes Redis is running locally on the default port.
+        'LOCATION': 'redis://redis:6379/1',  
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }
+
 
 CACHE_TTL = 60 * 30
 
