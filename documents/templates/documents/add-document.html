@@ -19,6 +19,19 @@
                 <input type="text" class="form-control" id="header" name="header" placeholder="Enter document header" required>
             </div>
             <div class="form-group">
+                <label for="language">Language:</label>
+                <select class="form-control" id="language" name="language" required>
+                    {% for language in languages %}
+                        {% if language == document.language %}
+                            <option value="{{language.id}}" selected>{{language}}</option>
+                    
+                            {% else %}
+                            <option value="{{ language.id }}">{{ language}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="category">Category:</label>
                 <select class="form-control" id="category" name="category" required>
                     <option value="" disabled selected>Select category</option>

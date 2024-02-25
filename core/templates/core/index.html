@@ -1,7 +1,20 @@
 {% extends "core/layout.html" %}
 
 {% block body %}
+
 <h2>{{category.title}} Documents</h2>
+    <h2>Languages</h2>
+        <ul class="list-group">
+            <li class="list-group-item"><a href="{% url "core:index" %}">All</a></li>   
+
+        {% for language in languages %}
+            <li class="list-group-item"><a href="{% url "core:langPage" language.id%}">{{language}}</a></li>   
+        {% endfor %}
+        </ul>
+    
+    
+
+
 <ul class="list-group">
     {% for document in documents %}
     <li class="list-group-item d-flex gap-3 align-items-center">

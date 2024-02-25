@@ -6,5 +6,6 @@ app_name = "core"
 
 urlpatterns = [
     path("", views.index, name = "index"),
-    path("category/<int:id>", views.get_category, name = "category")
+    path("category/<int:id>", views.get_category, name = "category"),
+    path("language/<int:id>", views.select_language_document, name = "langPage")
 ]

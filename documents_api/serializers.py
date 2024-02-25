@@ -7,5 +7,6 @@ class DocumentSerializer(serializers.ModelSerializer):
         fields = [
             'header',
             'body',
-            'category'
+            'category',
+            'language',
         ]

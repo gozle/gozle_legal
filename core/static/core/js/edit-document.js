@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let category = document.querySelector("#category").value;
         let header = document.querySelector("#header").value;
         let documentId = document.querySelector("#documentId").value; // Assuming you have a hidden input for document ID
-        
+        let language = document.querySelector("#language").value;
+        console.log(language)
         fetch(`/api/${documentId}`, { // Update the URL with the document ID
             method: "PUT", // Use PUT method
             headers: {
@@ -35,18 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
             body: JSON.stringify({
                 header: header,
                 body: value,
-                category: category
+                category: category,
+                language: language,
             })
         })
         .then(response => {
             if (response.ok) {
                 window.location.replace(`/documents/${documentId}`);  
             } 
-            return response.json(); // Parse error response as JSON
-        })
-        .then(data => {
-            // Display error message to the user
-            alert("Error: " + data['error']);
+            else{
+                console.log("something went wrong")
+            }
         })
     });
 });

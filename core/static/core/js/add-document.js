@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         var value = CKEDITOR.instances['id_body'].getData()
         let category = document.querySelector("#category").value
         let header = document.querySelector("#header").value
-
+        let language = document.querySelector("#language").value;
         fetch('/api/', {
             method: "POST",
             headers: {
@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             body: JSON.stringify({
                 header:header,
                 body:value,
-                category:category
+                category:category,
+                language:language,
             })
         })
         .then(response =>{

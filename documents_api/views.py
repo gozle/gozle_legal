@@ -33,7 +33,7 @@ class DocumentApi(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             print(serializer.errors)
-            return Response({"error":serializer.errors['header']}, status= status.HTTP_400_BAD_REQUEST)
+            return Response({"error":serializer.errors}, status= status.HTTP_400_BAD_REQUEST)
 
     @swagger_auto_schema(
         operation_summary="Update a document",
@@ -55,13 +55,15 @@ class DocumentApi(APIView):
             document = Document.objects.get(id = id)
         except Document.DoesNotExist:
             return Response({"error": "Document not found"}, status=status.HTTP_404_NOT_FOUND)
-        
+        print(request.data)
+        print(request.body)
         serializer = serializers.DocumentSerializer(document, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response({"error": serializer.errors['header']}, status=status.HTTP_400_BAD_REQUEST)
+            print(serializer.errors)
+            return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     @swagger_auto_schema(
         operation_summary="Delete a document",

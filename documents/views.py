@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.urls import reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.conf import settings
-from .models import Category, Document
+from .models import Category, Document, Language
 from .forms import PostForm
 from .utils import get_language_choices
 from django_elasticsearch_dsl import search
@@ -14,8 +14,7 @@ CACHE_TTL = getattr(settings, "CACHE_TTL")
 def add_document_view(request):
     if request.user.is_authenticated:
         categories = Category.objects.all()
-        languages = get_language_choices()
-        context = {"allCategories":categories, "form":PostForm, "languages":languages}
+        context = {"allCategories":categories, "form":PostForm, "languages":Language.objects.all()}
         return render(request, "documents/add-document.html", context)
     return JsonResponse({"status":"500 Auth Error"})
 
@@ -45,7 +44,9 @@ def edit_document_view(request, id):
     if request.user.is_authenticated:
         document = Document.objects.get(id = id)
         form = PostForm({"body":document.body})
-        context = {"document":document, "form":form, "allCategories":Category.objects.all()}
+        context = {"document":document, "form":form, 
+                   "allCategories":Category.objects.all(),
+                   "languages":Language.objects.all()}
         return render(request, "documents/edit-document.html", context)
 
 

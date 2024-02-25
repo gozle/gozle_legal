@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.cache import cache
 from django.conf import settings
-from documents.models import Category, Document
+from documents.models import Category, Document, Language
 
 CACHE_TTL = getattr(settings, "CACHE_TTL")
 
@@ -25,8 +25,8 @@ def index(request):
 
         all_categories = cached_categories
         documents = cached_documents
-
-    context = {"allCategories": all_categories, "documents": documents}
+    print(Language.objects.all())
+    context = {"allCategories": all_categories, "documents": documents, "languages":Language.objects.all()}
     return render(request, "core/index.html", context)
 
 
@@ -52,3 +52,9 @@ def get_category(request, id):
     context = {"allCategories":all_categories,"category":category, "documents":documents}
     return render(request,"core/index.html", context)   
 
+def select_language_document(request, id):
+    language = Language.objects.get(id = id)
+    documents =  Document.objects.filter(language = language)
+    categories = Category.objects.filter(language = language)
+    context = {"allCategories":categories,"documents":documents, "languages":Language.objects.all()}
+    return render(request, "core/index.html", context)
