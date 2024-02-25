@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.conf import settings
 from .models import Category, Document, Language
 from .forms import PostForm
-from .utils import get_language_choices
 from django_elasticsearch_dsl import search
 from elasticsearch import Elasticsearch
 

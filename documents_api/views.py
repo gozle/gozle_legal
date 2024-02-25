@@ -10,9 +10,21 @@ from . import serializers
 
 class DocumentApi(APIView):
     permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        operation_description="Retrieve a document by its ID",
+        responses={
+            200: openapi.Response("Successful retrieval", serializers.DocumentSerializer),
+            404: "Document not found"
+        }
+    )
+    def get(self, request, id):
 
-    def get(self, request):
-        return Response("good job!")
+        try:
+            document = Document.objects.get(id = id)
+            serializer = serializers.DocumentSerializer(document)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Document.DoesNotExist:
+            return Response("File was not found", status=status.HTTP_404_NOT_FOUND)
     
     @swagger_auto_schema(
         operation_summary="Create a new document",
