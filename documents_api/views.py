@@ -10,21 +10,6 @@ from . import serializers
 
 class DocumentApi(APIView):
     permission_classes = [IsAuthenticated]
-    @swagger_auto_schema(
-        operation_description="Retrieve a document by its ID",
-        responses={
-            200: openapi.Response("Successful retrieval", serializers.DocumentSerializer),
-            404: "Document not found"
-        }
-    )
-    def get(self, request, id):
-
-        try:
-            document = Document.objects.get(id = id)
-            serializer = serializers.DocumentSerializer(document)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Document.DoesNotExist:
-            return Response("File was not found", status=status.HTTP_404_NOT_FOUND)
     
     @swagger_auto_schema(
         operation_summary="Create a new document",
@@ -38,14 +23,34 @@ class DocumentApi(APIView):
         ),
         responses={201: openapi.Response("The created document")},
     )
-    def post(self,request):
-        serializer = serializers.DocumentSerializer(data = request.data)
+    def post(self, request):
+        serializer = serializers.DocumentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print(serializer.errors)
-            return Response({"error":serializer.errors}, status= status.HTTP_400_BAD_REQUEST)
+            return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+
+class DocumentDetailsApi(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_description="Retrieve a document by its ID",
+        responses={
+            200: openapi.Response("Successful retrieval", serializers.DocumentSerializer),
+            404: "Document not found"
+        }
+    )
+    def get(self, request, id):
+        try:
+            document = Document.objects.get(id=id)
+            serializer = serializers.DocumentSerializer(document)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Document.DoesNotExist:
+            return Response("Document not found", status=status.HTTP_404_NOT_FOUND)
 
     @swagger_auto_schema(
         operation_summary="Update a document",
@@ -62,19 +67,17 @@ class DocumentApi(APIView):
         ),
         responses={200: openapi.Response("The updated document"), 400: "Bad request, invalid input data", 404: "Document not found"},
     )
-    def put(self,request,id):
+    def put(self, request, id):
         try:
-            document = Document.objects.get(id = id)
+            document = Document.objects.get(id=id)
         except Document.DoesNotExist:
             return Response({"error": "Document not found"}, status=status.HTTP_404_NOT_FOUND)
-        print(request.data)
-        print(request.body)
+
         serializer = serializers.DocumentSerializer(document, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
-            print(serializer.errors)
             return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
     @swagger_auto_schema(
@@ -84,7 +87,11 @@ class DocumentApi(APIView):
         ],
         responses={200: openapi.Response("Document successfully deleted"), 404: "Document not found"},
     )
-    def delete(self, request,id):
-        document = Document.objects.get(id = id)
+    def delete(self, request, id):
+        try:
+            document = Document.objects.get(id=id)
+        except Document.DoesNotExist:
+            return Response({"error": "Document not found"}, status=status.HTTP_404_NOT_FOUND)
+            
         document.delete()
-        return Response({"status":"successfully deleted!"}, status = status.HTTP_200_OK)
+        return Response({"status": "Document successfully deleted"}, status=status.HTTP_200_OK)
