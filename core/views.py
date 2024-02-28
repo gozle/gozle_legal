@@ -52,8 +52,8 @@ def get_category(request, id):
     context = {"allCategories":all_categories,"category":category, "documents":documents}
     return render(request,"core/index.html", context)   
 
-def select_language_document(request, id):
-    language = Language.objects.get(id = id)
+def select_language_document(request, lang):
+    language = Language.objects.get(language_name = lang)
     documents =  Document.objects.filter(language = language)
     categories = Category.objects.filter(language = language)
     context = {"allCategories":categories,"documents":documents, "languages":Language.objects.all()}
