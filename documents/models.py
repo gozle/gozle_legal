@@ -6,6 +6,7 @@ class Language(models.Model):
     class SelectLanguage(models.TextChoices):
         RU = 'ru', 'Ru'
         ENG = 'eng', 'Eng'
+        ENG = 'tk', 'Tkm'
 
     language_name = models.CharField(max_length = 10, choices = SelectLanguage.choices, default = SelectLanguage.RU)
 
