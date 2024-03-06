@@ -1,10 +1,18 @@
 from django.shortcuts import render
 from django.core.cache import cache
 from django.urls import reverse
-from django.http import HttpResponseRedirect, JsonResponse
+
+from django.http import HttpResponseRedirect, JsonResponse, FileResponse
 from django.conf import settings
 from .models import Category, Document, Language
 from .forms import PostForm
+
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from django.template.defaultfilters import striptags
+from reportlab.lib.units import inch
+
 from django_elasticsearch_dsl import search
 from elasticsearch import Elasticsearch
 
@@ -48,6 +56,28 @@ def edit_document_view(request, id):
                    "languages":Language.objects.all()}
         return render(request, "documents/edit-document.html", context)
 
+def generate_pdf(request, id):
+    document = Document.objects.get(id=id)
 
+    header = striptags(document.header)  # Strip HTML tags from header
+    body = striptags(document.body)  # Strip HTML tags from body
 
+    buffer = io.BytesIO()
 
+    p = canvas.Canvas(buffer, pagesize=letter)
+
+    # Set font and size for header
+    p.setFont("Helvetica-Bold", 14)
+    header_width = p.stringWidth(header)
+    p.drawString((letter[0] - header_width) / 2, letter[1] - 0.75 * inch, header)
+
+    # Set font and size for body
+    p.setFont("Helvetica", 12)
+    body_width = p.stringWidth(body)
+    p.drawString((letter[0] - body_width) / 2, letter[1] / 2, body)
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename=document.header + ".pdf")

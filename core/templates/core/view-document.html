@@ -31,6 +31,7 @@
             </div> {% endcomment %}
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 {{document.body|safe}}
+                <a href="{% url "documents:pdf" document.id%}"  ><button id="download-pdf-btn" class="btn btn-primary">Download PDF</button></a>
             </div>
         </div>
     </div>

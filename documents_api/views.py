@@ -6,6 +6,10 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from documents.models import Document
 
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from io import BytesIO
+
 from . import serializers
 
 class DocumentApi(APIView):

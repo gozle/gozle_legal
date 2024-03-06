@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Run migrations
-python manage.py migrate
+python3 manage.py makemigrations accounts documents
+python3 manage.py migrate
 
-python manage.py createsuperuser
 
 # Start Django development server
 exec "$@"
