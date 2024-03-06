@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'Legal', 
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        #'HOST': 'db', 
-        'HOST':'127.0.0.1',
+        'HOST': 'db', 
+        #'HOST':'127.0.0.1', # if not docker
         'PORT': '5432',
     }
 }
@@ -158,8 +158,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        #'LOCATION': 'redis://redis:6379/1',  
-        'LOCATION': 'redis://127.0.0.1:6379/1', 
+        'LOCATION': 'redis://redis:6379/1',  
+        #'LOCATION': 'redis://127.0.0.1:6379/1', #if not docker
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -172,7 +172,7 @@ CACHE_TTL = 60 * 30
 #ELASTIC SEARCH
 ELASTICSEARCH_DSL = {
     'default': {
-        #'hosts': 'http://elasticsearch:9200'
-        'hosts':"http://localhost:9200"
+        'hosts': 'http://elasticsearch:9200'
+        #'hosts':"http://localhost:9200" if not docker
     },
 }
